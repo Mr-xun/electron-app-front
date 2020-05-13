@@ -1,7 +1,12 @@
 <template>
     <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png">
+         <ul><li v-for="(item,index) in userList" :key="index">
+                账号：<span>{{item.name}}</span>
+                密码：<span>{{item.password}}</span>
+                </li></ul>
+        <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
         <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+           
     </div>
 </template>
 
@@ -15,12 +20,14 @@ import api from '@/api'
     }
 })
 export default class App extends Vue {
+    private userList = []
     mounted() {
         let params = {
             name:'荀潇'
         }
         api.test(params).then(res => {
-            console.log(res);
+            console.log(res.data.list);
+            this.userList = res.data.list
         });
     }
 }
