@@ -20,7 +20,7 @@ loadMenus();
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
-        width: 1200, height: 620, webPreferences: {
+        width: 1200, height: 800, webPreferences: {
             nodeIntegration: true,
             webSecurity: false,
         },

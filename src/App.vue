@@ -1,12 +1,13 @@
 <template>
     <div id="app">
-         <ul><li v-for="(item,index) in userList" :key="index">
-                账号：<span>{{item.name}}</span>
-                密码：<span>{{item.password}}</span>
-                </li></ul>
-        <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-        <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-           
+        <ul>
+            <li v-for="(item,index) in userList" :key="index">
+                用户：{{item.name}}
+                <hr/>
+                密码：{{item.password}}
+            </li>
+        </ul>
+        <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
     </div>
 </template>
 
@@ -26,8 +27,9 @@ export default class App extends Vue {
             name:'荀潇'
         }
         api.test(params).then(res => {
-            console.log(res.data.list);
-            this.userList = res.data.list
+            console.log(res);
+            let {list} = res.data
+            this.userList = list
         });
     }
 }
