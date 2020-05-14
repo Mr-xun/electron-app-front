@@ -1,4 +1,4 @@
-const { BrowserWindow, Menu, app, shell, dialog } = require('electron');
+const { BrowserWindow, ipcMain, Menu, app, shell, dialog } = require('electron');
 
 let template: any[] = [
     {
@@ -147,6 +147,30 @@ let template: any[] = [
                 }
             }
         ]
+    },
+    {
+        label: 'Tool',
+        submenu: [
+            {
+                label: '后退',
+                click: (item: any, focusedWindow: any) => {
+                    focusedWindow.send('href', 'back')
+                }
+            },
+            {
+                label: '登录',
+                click: (item: any, focusedWindow: any) => {
+                    focusedWindow.send('href', 'login')
+                }
+            },
+            {
+                label: '主页',
+                click: (item: any, focusedWindow: any) => {
+                    focusedWindow.send('href', 'home')
+                }
+            },
+        ]
+
     }
 ];
 
