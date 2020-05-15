@@ -4,6 +4,7 @@
 // @import "./svgicon.scss";
 /* Global scss */
 @import './mixins.scss';
+@import './transition.scss';
 
 body {
     height: 100%;
@@ -42,8 +43,4 @@ div:focus {
 
 .clearfix {
     @include clearfix;
-}
-
-.app-container {
-    padding: 20px;
 }

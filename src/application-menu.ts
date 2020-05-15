@@ -169,6 +169,12 @@ let template: any[] = [
                     focusedWindow.send('href', 'home')
                 }
             },
+            {
+                label: '关于',
+                click: (item: any, focusedWindow: any) => {
+                    focusedWindow.send('href', 'about')
+                }
+            }
         ]
 
     }

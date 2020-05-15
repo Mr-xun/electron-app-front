@@ -6,7 +6,7 @@ export default {
     userLogin(params: any) {
         return axios.post('/user/login', params);
     },
-    getUserList() {
-        return axios.get('/user/list');
+    getUserList(params: Object) {
+        return axios.post('/user/list', params);
     }
 }
