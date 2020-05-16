@@ -160,19 +160,19 @@ let template: any[] = [
             {
                 label: '登录',
                 click: (item: any, focusedWindow: any) => {
-                    focusedWindow.send('href', 'login')
+                    focusedWindow.send('href', '/login')
                 }
             },
             {
                 label: '主页',
                 click: (item: any, focusedWindow: any) => {
-                    focusedWindow.send('href', 'home')
+                    focusedWindow.send('href', '/home')
                 }
             },
             {
                 label: '关于',
                 click: (item: any, focusedWindow: any) => {
-                    focusedWindow.send('href', 'about')
+                    focusedWindow.send('href', '/user/about')
                 }
             }
         ]

@@ -1,15 +1,6 @@
 <template>
     <div class="home">
-        <ul>
-            <li v-for="(item,index) in userList" :key="index" @click="changeValue">
-                用户：{{item.username}}
-                <hr />
-                密码：{{item.password}}
-            </li>
-        </ul>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-            :current-page="pagination.currentPage" :page-sizes="[5, 10, 15, 50]" :page-size="pagination.pageSize"
-            layout="total, sizes, prev, pager, next, jumper" :total="pagination.totalSize"></el-pagination>
+       <h2>这是首页</h2>
     </div>
 </template>
 <script lang='ts'>
@@ -61,13 +52,11 @@ export default class Home extends Vue {
         this.getUserList();
     }
     mounted() {
-        this.getUserList();
     }
 }
 </script>
 <style lang='scss'>
     .home{
         overflow: hidden;
-        width: calc(100% - 200px);
     }
 </style>

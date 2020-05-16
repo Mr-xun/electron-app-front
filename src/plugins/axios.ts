@@ -2,9 +2,10 @@ import axios from 'axios';
 import router from '../router'
 let devBaseUrl = 'http://192.168.13.241:3001'
 let proBaseUrl = 'http://49.233.16.84:3001'
+let homeBaseUrl = 'http://192.168.0.127:3001'
 const instance = axios.create({
     withCredentials: true,
-    baseURL: process.env.NODE_ENV == 'product' ? proBaseUrl : devBaseUrl,
+    baseURL: process.env.NODE_ENV == 'product' ? proBaseUrl : homeBaseUrl,
     headers: {
         'Content-Type': 'application/json; charset=UTF-8'
     },
