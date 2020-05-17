@@ -1,34 +1,32 @@
 <template>
   <div class="user-list-container">
     <el-table :data="userList" stripe style="width: 100%">
-      <el-table-column prop="username" label="用户名" ></el-table-column>
-      <el-table-column prop="password" label="密码" ></el-table-column>
+      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="password" label="密码"></el-table-column>
       <el-table-column prop="sex" label="性别"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
       <el-table-column prop="role" label="角色"></el-table-column>
     </el-table>
-    <div class="bottom-pagination"> 
-<el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="pagination.currentPage"
-      :page-sizes="[5, 10, 15, 50]"
-      :page-size="pagination.pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.totalSize"
-    ></el-pagination>
+    <div class="bottom-pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currentPage"
+        :page-sizes="[5, 10, 15, 50]"
+        :page-size="pagination.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pagination.totalSize"
+      ></el-pagination>
     </div>
-    
   </div>
 </template>
 <script lang='ts'>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 import api from "@/api";
 import { Component, Vue, Emit } from "vue-property-decorator";
 @Component({
   name: "Home",
-  components: { HelloWorld }
+  components: {}
 })
 export default class Home extends Vue {
   private userList = [];
@@ -76,9 +74,8 @@ export default class Home extends Vue {
 }
 </script>
 <style lang='scss'>
-
-.bottom-pagination{
-     padding: 15px 0;
-            text-align: right;
+.bottom-pagination {
+  padding: 15px 0;
+  text-align: right;
 }
 </style>

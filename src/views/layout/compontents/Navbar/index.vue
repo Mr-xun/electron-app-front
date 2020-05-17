@@ -14,7 +14,7 @@
             <el-dropdown-item icon="el-icon-s-home">首页</el-dropdown-item>
           </router-link>
           <el-dropdown-item icon="el-icon-user" divided>荀潇</el-dropdown-item>
-          <el-dropdown-item icon="el-icon-close" divided>
+          <el-dropdown-item icon="lf-icon-tuichu" divided>
             <span @click="goLogin">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -50,7 +50,8 @@ export default class NavBar extends Vue {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0px 3px 4px -4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 3px 3px -5px rgba(0, 0, 0, 0.8);
+  
   .right-menu {
     .avatar-wrapper {
       display: flex;

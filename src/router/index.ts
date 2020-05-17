@@ -10,7 +10,9 @@ import Layout from '@/views/layout/index.vue'
     roles: ['admin', 'editor']   will control the page roles (allow setting multiple roles)
     title: 'title'               the name showed in subMenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon showed in the sidebar
+
     hidden: true                 if true, this route will not show in the sidebar (default is false)
+    rootMenu:true                if true, this route`s children will as the root menu (default is false)
     alwaysShow: true             if true, will always show the root menu (default is false)
                                  if false, hide the root menu when has less or equal than one children route
     breadcrumb: false            if false, the item will be hidden in breadcrumb (default is true)
@@ -19,19 +21,77 @@ import Layout from '@/views/layout/index.vue'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
 */
-const routes: RouteConfig[] = [
+export const routes: RouteConfig[] = [
     {
         path: '/',
         component: Layout,
         redirect: '/home',
+        meta:{
+            rootMenu:true
+        },
         children: [{
-            path: '/home',
+            path: 'home',
             name:'home',
             component: () => import('@/views/Home.vue'),
             meta: {
-                title: '首页'
+                title: '首页',
+                icon:'shouye'
             }
         }]
+    },{
+        path: '/wholesale',
+        component: Layout,
+        redirect: '/wholesale/sell',
+        meta: {
+            title: '批发管理',
+            icon:'pifa'
+        },
+        children: [{
+            path: 'sell',
+            name: 'wholesale-sell',
+            component: () => import("@/views/wholesale/sell/index.vue"),
+            meta: {
+                title: '批发销售',
+                icon:'xiaoshouzu'
+            }
+        }, {
+            path: 'record',
+            name: 'wholesale-record',
+            component: () => import("@/views/wholesale/record/index.vue"),
+            meta: {
+                title: '批发记录',
+                icon:'dingdan'
+            }
+
+        }
+        ]
+    },{
+        path: '/baseFile',
+        component: Layout,
+        redirect: '/baseFile/goods',
+        meta: {
+            title: '基本档案',
+            icon:'dangan'
+        },
+        children: [{
+            path: 'goods',
+            name: 'baseFile-goods',
+            component: () => import("@/views/baseFile/goods/index.vue"),
+            meta: {
+                title: '商品档案',
+                icon:'shangpin'
+            }
+        }, {
+            path: 'merchant',
+            name: 'baseFile-merchant',
+            component: () => import("@/views/baseFile/merchant/index.vue"),
+            meta: {
+                title: '商户档案',
+                icon:'kehu'
+            }
+
+        }
+        ]
     },
     {
         path: '/user',
@@ -39,6 +99,7 @@ const routes: RouteConfig[] = [
         redirect: '/user/list',
         meta: {
             title: '用户',
+            icon:'yonghu'
         },
         children: [{
             path: 'list',
@@ -61,6 +122,9 @@ const routes: RouteConfig[] = [
         path: '/login',
         name: 'Login',
         component: () => import('../views/login/index.vue'),
+        meta:{
+            hidden:true
+        }
     }
 ];
 

@@ -5,12 +5,10 @@
 </template>
 <script lang='ts'>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 import api from "@/api";
 import { Component, Vue,Emit } from "vue-property-decorator";
 @Component({
     name: "Home",
-    components: { HelloWorld }
 })
 export default class Home extends Vue {
     private userList = [];

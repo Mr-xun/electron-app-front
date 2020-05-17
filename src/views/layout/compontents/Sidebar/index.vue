@@ -1,23 +1,39 @@
 <template>
-  <el-menu :default-openeds="['1', '3']" router background-color="#304156" text-color="#bfcbd9" active-text-color="#409eff" style="height:100%;">
-    <el-menu-item index="/home">
-      <i class="el-icon-s-home"></i>首页
-    </el-menu-item>
-    <el-submenu index="1">
-      <template slot="title">
-        <i class="el-icon-user-solid"></i>用户
-      </template>
-      <el-menu-item index="/user/list">列表</el-menu-item>
-      <el-menu-item index="/user/about">关于</el-menu-item>
-    </el-submenu>
+  <el-menu
+    :default-active="activeMenu"
+    :unique-opened="false"
+    router
+    background-color="#304156"
+    text-color="#bfcbd9"
+    active-text-color="#409eff"
+    style="height:100%;"
+  >
+    <MenuItem v-for="(route,index) in routes" :key="index" :route="route" :base-path="route.path" />
   </el-menu>
 </template>
 <script lang='ts'>
 import { Component, Vue } from "vue-property-decorator";
+import MenuItem from "./MenuItem.vue";
+import { routes } from "@/router";
 @Component({
-  name: "Sidebar"
+  name: "Sidebar",
+  components: {
+    MenuItem
+  }
 })
 export default class Sidebar extends Vue {
-
+  get routes() {
+    return routes;
+  }
+  get activeMenu() {
+    const route = this.$route;
+    const { meta, path } = route;
+    // if set path, the sidebar will highlight the path you set
+    if (meta.activeMenu) {
+      return meta.activeMenu;
+    }
+    return path;
+  }
+  mounted() {}
 }
 </script>

@@ -1,18 +1,15 @@
 <template>
     <div id="app">
         <router-view></router-view>
-        <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
 import { RouteRecord, Route } from "vue-router";
 import api from "@/api";
 @Component({
     components: {
-        HelloWorld
     }
 })
 export default class App extends Vue {
