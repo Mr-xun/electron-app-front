@@ -16,22 +16,28 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="startSearch">查询</el-button>
+          <el-button type="success" @click="startSearch" >新增</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="list-wrap">
       <el-table :data="tableData" border style="width: 100%" stripe>
-        <el-table-column align='center' prop="goods_code" label="货号" ></el-table-column>
-        <el-table-column align='center' prop="name" label="名称" ></el-table-column>
-        <el-table-column align='center' prop="brand" label="品牌"></el-table-column>
-        <el-table-column align='center' prop="inventory_count" label="库存"></el-table-column>
-        <el-table-column align='center' prop="brand_code" label="品牌编码"></el-table-column>
-        <el-table-column align='center' prop="specifica" label="规格"></el-table-column>
-        <el-table-column align='center' prop="primecost" label="进货价"></el-table-column>
-        <el-table-column align='center' prop="retail_price" label="零售价"></el-table-column>
-        <el-table-column align='center' prop="trade_price" label="批发价（通用）"></el-table-column>
-        <el-table-column align='center' prop="owncode" label="自编码"></el-table-column>
-
+        <el-table-column align="center" prop="goods_code" label="货号"></el-table-column>
+        <el-table-column align="center" prop="name" label="名称"></el-table-column>
+        <el-table-column align="center" prop="brand" label="品牌"></el-table-column>
+        <el-table-column align="center" prop="inventory_count" label="库存"></el-table-column>
+        <el-table-column align="center" prop="brand_code" label="品牌编码"></el-table-column>
+        <el-table-column align="center" prop="specifica" label="规格"></el-table-column>
+        <el-table-column align="center" prop="primecost" label="进货价"></el-table-column>
+        <el-table-column align="center" prop="retail_price" label="零售价"></el-table-column>
+        <el-table-column align="center" prop="trade_price" label="批发价（通用）"></el-table-column>
+        <el-table-column align="center" prop="owncode" label="自编码"></el-table-column>
+        <el-table-column align="center" label="操作">
+          <template>
+            <el-button type="text">编辑</el-button>
+            <el-button type="text" style="color:#f56c6c;">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="bottom-pagination">
         <el-pagination
@@ -63,49 +69,49 @@ export default class GoodList extends Vue {
       goods_code: "001",
       name: "伊利小布丁",
       brand: "伊利",
-      brand_code:'101',
-      inventory_count:999,
-      specifica:'1*40',
-      primecost:'44.00',
-      retail_price:'48.00',
-      trade_price:'46.00',
-      owncode:'1001',
+      brand_code: "101",
+      inventory_count: 999,
+      specifica: "1*40",
+      primecost: "44.00",
+      retail_price: "48.00",
+      trade_price: "46.00",
+      owncode: "1001"
     },
     {
       goods_code: "002",
       name: "伊利梦工厂",
       brand: "伊利",
-      brand_code:'101',
-      inventory_count:999,
-      specifica:'1*40',
-      primecost:'44.00',
-      retail_price:'48.00',
-      trade_price:'46.00',
-      owncode:'1001',
+      brand_code: "101",
+      inventory_count: 999,
+      specifica: "1*40",
+      primecost: "44.00",
+      retail_price: "48.00",
+      trade_price: "46.00",
+      owncode: "1001"
     },
     {
       goods_code: "003",
       name: "蒙牛大布丁",
       brand: "蒙牛",
-      brand_code:'101',
-      inventory_count:999,
-      specifica:'1*40',
-      primecost:'44.00',
-      retail_price:'48.00',
-      trade_price:'46.00',
-      owncode:'1001',
+      brand_code: "101",
+      inventory_count: 999,
+      specifica: "1*40",
+      primecost: "44.00",
+      retail_price: "48.00",
+      trade_price: "46.00",
+      owncode: "1001"
     },
     {
       goods_code: "004",
       name: "华英迷你",
       brand: "华英",
-      brand_code:'101',
-      inventory_count:999,
-      specifica:'1*40',
-      primecost:'44.00',
-      retail_price:'48.00',
-      trade_price:'46.00',
-      owncode:'1001',
+      brand_code: "101",
+      inventory_count: 999,
+      specifica: "1*40",
+      primecost: "44.00",
+      retail_price: "48.00",
+      trade_price: "46.00",
+      owncode: "1001"
     }
   ];
   private pagination: {
