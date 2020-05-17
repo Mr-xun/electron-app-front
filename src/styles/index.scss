@@ -44,6 +44,19 @@ div:focus {
 .clearfix {
     @include clearfix;
 }
-.el-form-item{
+
+.el-form-item {
     margin-bottom: 0px !important;
+}
+
+.header-query {
+    background: #fff;
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.bottom-pagination {
+    padding: 15px 0;
+    text-align: right;
 }

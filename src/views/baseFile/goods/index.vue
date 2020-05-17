@@ -24,10 +24,12 @@
         <el-table-column align='center' prop="goods_code" label="货号" ></el-table-column>
         <el-table-column align='center' prop="name" label="名称" ></el-table-column>
         <el-table-column align='center' prop="brand" label="品牌"></el-table-column>
-        <el-table-column align='center' prop="boxcount" label="支数"></el-table-column>
+        <el-table-column align='center' prop="inventory_count" label="库存"></el-table-column>
+        <el-table-column align='center' prop="brand_code" label="品牌编码"></el-table-column>
+        <el-table-column align='center' prop="specifica" label="规格"></el-table-column>
         <el-table-column align='center' prop="primecost" label="进货价"></el-table-column>
         <el-table-column align='center' prop="retail_price" label="零售价"></el-table-column>
-        <el-table-column align='center' prop="trade_price" label="批发价"></el-table-column>
+        <el-table-column align='center' prop="trade_price" label="批发价（通用）"></el-table-column>
         <el-table-column align='center' prop="owncode" label="自编码"></el-table-column>
 
       </el-table>
@@ -61,7 +63,9 @@ export default class GoodList extends Vue {
       goods_code: "001",
       name: "伊利小布丁",
       brand: "伊利",
-      boxcount:'40',
+      brand_code:'101',
+      inventory_count:999,
+      specifica:'1*40',
       primecost:'44.00',
       retail_price:'48.00',
       trade_price:'46.00',
@@ -71,7 +75,9 @@ export default class GoodList extends Vue {
       goods_code: "002",
       name: "伊利梦工厂",
       brand: "伊利",
-      boxcount:'40',
+      brand_code:'101',
+      inventory_count:999,
+      specifica:'1*40',
       primecost:'44.00',
       retail_price:'48.00',
       trade_price:'46.00',
@@ -81,7 +87,9 @@ export default class GoodList extends Vue {
       goods_code: "003",
       name: "蒙牛大布丁",
       brand: "蒙牛",
-      boxcount:'40',
+      brand_code:'101',
+      inventory_count:999,
+      specifica:'1*40',
       primecost:'44.00',
       retail_price:'48.00',
       trade_price:'46.00',
@@ -91,7 +99,9 @@ export default class GoodList extends Vue {
       goods_code: "004",
       name: "华英迷你",
       brand: "华英",
-      boxcount:'40',
+      brand_code:'101',
+      inventory_count:999,
+      specifica:'1*40',
       primecost:'44.00',
       retail_price:'48.00',
       trade_price:'46.00',
@@ -118,20 +128,10 @@ export default class GoodList extends Vue {
 </script>
 <style lang="scss" >
 .goods-container {
-  .header-query {
-    background: #fff;
-    padding: 10px;
-    border-radius: 3px;
-    margin-bottom: 5px;
-  }
   .list-wrap {
     padding: 5px;
     background: #fff;
     border-radius: 3px;
-    .bottom-pagination {
-      padding: 15px 0;
-      text-align: right;
-    }
   }
 }
 </style>
