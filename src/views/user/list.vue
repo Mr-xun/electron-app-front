@@ -1,5 +1,5 @@
 <template>
-  <div class="user-list-container">
+  <div class="user-list-container main-content-container">
     <el-table :data="userList" stripe style="width: 100%">
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="password" label="密码"></el-table-column>
@@ -50,7 +50,7 @@ export default class Home extends Vue {
       pageNum: this.pagination.currentPage
     };
     api
-      .getUserList(params)
+      .user_list(params)
       .then(res => {
         let { code, list, total } = res.data;
         this.userList = list;

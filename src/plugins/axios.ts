@@ -5,7 +5,7 @@ let proBaseUrl = 'http://49.233.16.84:3001'
 let homeBaseUrl = 'http://192.168.0.127:3001'
 const instance = axios.create({
     withCredentials: true,
-    baseURL: process.env.NODE_ENV == 'product' ? proBaseUrl : homeBaseUrl,
+    baseURL: process.env.NODE_ENV == 'product' ? proBaseUrl : devBaseUrl,
     headers: {
         'Content-Type': 'application/json; charset=UTF-8'
     },

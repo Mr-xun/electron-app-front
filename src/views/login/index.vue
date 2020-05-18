@@ -66,7 +66,7 @@ export default class Login extends Vue {
     };
     (this.$refs["loginFrom"] as any).validate((valid: boolean) => {
       if (valid) {
-        api.userLogin(params).then(res => {
+        api.user_login(params).then(res => {
           let { code } = res.data;
           if (code == 0) {
             localStorage.setItem("token", res.data.token);

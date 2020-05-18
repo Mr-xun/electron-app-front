@@ -1,5 +1,5 @@
 <template>
-    <div class="goods-container">
+    <div class="goods-container main-content-container">
         <div class="header-query">
 
         </div>

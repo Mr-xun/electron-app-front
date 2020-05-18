@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-container">
+  <div class="goods-container main-content-container">
     <div class="header-query">
       <el-form :inline="true" :model="goodsForm" class="demo-form-inline">
         <el-form-item label="货号">
