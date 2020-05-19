@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 const { ipcRenderer } = require('electron');
+import { UserModule } from './../store/modules/user';
 Vue.use(VueRouter);
 import Layout from '@/views/layout/index.vue'
 /*
@@ -26,25 +27,25 @@ export const routes: RouteConfig[] = [
         path: '/',
         component: Layout,
         redirect: '/home',
-        meta:{
-            rootMenu:true
+        meta: {
+            rootMenu: true
         },
         children: [{
             path: 'home',
-            name:'home',
+            name: 'home',
             component: () => import('@/views/Home.vue'),
             meta: {
                 title: '首页',
-                icon:'shouye'
+                icon: 'shouye'
             }
         }]
-    },{
+    }, {
         path: '/wholesale',
         component: Layout,
         redirect: '/wholesale/sell',
         meta: {
             title: '批发管理',
-            icon:'pifa'
+            icon: 'pifa'
         },
         children: [{
             path: 'sell',
@@ -52,7 +53,7 @@ export const routes: RouteConfig[] = [
             component: () => import("@/views/wholesale/sell/index.vue"),
             meta: {
                 title: '批发销售',
-                icon:'xiaoshouzu'
+                icon: 'xiaoshouzu'
             }
         }, {
             path: 'record',
@@ -60,18 +61,18 @@ export const routes: RouteConfig[] = [
             component: () => import("@/views/wholesale/record/index.vue"),
             meta: {
                 title: '批发记录',
-                icon:'dingdan'
+                icon: 'dingdan'
             }
 
         }
         ]
-    },{
+    }, {
         path: '/baseFile',
         component: Layout,
         redirect: '/baseFile/goods',
         meta: {
             title: '基本档案',
-            icon:'dangan'
+            icon: 'dangan'
         },
         children: [{
             path: 'goods',
@@ -79,7 +80,7 @@ export const routes: RouteConfig[] = [
             component: () => import("@/views/baseFile/goods/index.vue"),
             meta: {
                 title: '商品档案',
-                icon:'shangpin'
+                icon: 'shangpin'
             }
         }, {
             path: 'merchant',
@@ -87,7 +88,7 @@ export const routes: RouteConfig[] = [
             component: () => import("@/views/baseFile/merchant/index.vue"),
             meta: {
                 title: '商户档案',
-                icon:'kehu'
+                icon: 'kehu'
             }
 
         }
@@ -99,7 +100,7 @@ export const routes: RouteConfig[] = [
         redirect: '/user/list',
         meta: {
             title: '用户',
-            icon:'yonghu'
+            icon: 'yonghu'
         },
         children: [{
             path: 'list',
@@ -122,8 +123,8 @@ export const routes: RouteConfig[] = [
         path: '/login',
         name: 'Login',
         component: () => import('../views/login/index.vue'),
-        meta:{
-            hidden:true
+        meta: {
+            hidden: true
         }
     }
 ];
@@ -143,4 +144,20 @@ ipcRenderer.on('href', (event: void, arg: string) => {
         }
     }
 });
+router.beforeEach(async (to, from, next) => {
+    if (to.path === '/login') {
+        next()
+    } else {
+        if (JSON.stringify(UserModule.userInfo) == '{}') {
+            const result = await UserModule.getUserInfo()
+            if (result) {
+                next()
+            } else {
+                next({ path: '/login' })
+            }
+        } else {
+            next()
+        }
+    }
+})
 export default router;

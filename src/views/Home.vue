@@ -25,30 +25,6 @@ export default class Home extends Vue {
     private changeValue(){
         return 10
     }
-
-    getUserList() {
-        let params = {
-            pageSize: this.pagination.pageSize,
-            pageNum: this.pagination.currentPage
-        };
-        api.getUserList(params)
-            .then(res => {
-                let { code, list, total } = res.data;
-                this.userList = list;
-                this.pagination.totalSize = total;
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-    handleSizeChange(val:number) {
-        this.pagination.pageSize = val;
-        this.getUserList();
-    }
-    handleCurrentChange(val:number) {
-        this.pagination.currentPage = val;
-        this.getUserList();
-    }
     mounted() {
     }
 }

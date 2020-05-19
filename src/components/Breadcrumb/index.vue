@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb  class="app-breadcrumb" >
     <transition-group name="breadcrumb" key="breadcrumb">
-      <el-breadcrumb-item v-for="(item,index) in breadcrumbs" :key="index">
+      <el-breadcrumb-item v-for="(item,index) in breadcrumbs" :key="index+'breadcrumb'">
         <span class="no-redirect" v-if="index == breadcrumbs.length -1">{{item.meta.title}}</span>
         <a v-else @click="handleLink(item)">{{item.meta.title}}</a>
       </el-breadcrumb-item>

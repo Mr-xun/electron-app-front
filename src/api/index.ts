@@ -5,6 +5,10 @@ export default {
         //登录
         return axios.post('/user/login', params);
     },
+    user_logout() {
+        //退出登录
+        return axios.get('/user/logout');
+    },
     user_info() {
         //信息
         return axios.get('/user/currentUser')
@@ -16,6 +20,10 @@ export default {
     user_register(params: { username: string, password: string }) {
         //注册
         return axios.post('/user/register', params);
+    },
+    user_resetPwd(params: { userId?: string, account?: string, verify_one: string, verify_two: string, verify_three: string }) {
+        //重置密码
+        return axios.post('/user/resetpwd', params);
     },
     /*****************商户*******************************/
     merchant_list(params: { name?: string, contact?: string, pageNum?: string, pageSize?: string }) {
