@@ -11,7 +11,7 @@ import Layout from '@/views/layout/index.vue'
     roles: ['admin', 'editor']   will control the page roles (allow setting multiple roles)
     title: 'title'               the name showed in subMenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon showed in the sidebar
-
+    hiddenSubmenu:true           if true, this route will not show the submenu (default is false)
     hidden: true                 if true, this route will not show in the sidebar (default is false)
     rootMenu:true                if true, this route`s children will as the root menu (default is false)
     alwaysShow: true             if true, will always show the root menu (default is false)
@@ -53,7 +53,8 @@ export const routes: RouteConfig[] = [
             component: () => import("@/views/wholesale/sell/index.vue"),
             meta: {
                 title: '批发销售',
-                icon: 'xiaoshouzu'
+                icon: 'xiaoshouzu',
+
             }
         }, {
             path: 'record',
@@ -88,9 +89,8 @@ export const routes: RouteConfig[] = [
             component: () => import("@/views/baseFile/merchant/index.vue"),
             meta: {
                 title: '商户档案',
-                icon: 'kehu'
-            }
-
+                icon: 'kehu',
+            },
         }
         ]
     },
@@ -149,12 +149,18 @@ router.beforeEach(async (to, from, next) => {
         next()
     } else {
         if (JSON.stringify(UserModule.userInfo) == '{}') {
-            const result = await UserModule.getUserInfo()
-            if (result) {
-                next()
-            } else {
+            try {
+                const result = await UserModule.getUserInfo()
+                if (result) {
+                    next()
+                } else {
+                    next({ path: '/login' })
+                }
+            } catch (error) {
+                console.log(error)
                 next({ path: '/login' })
             }
+
         } else {
             next()
         }

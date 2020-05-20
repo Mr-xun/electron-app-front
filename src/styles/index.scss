@@ -51,9 +51,13 @@ div:focus {
 
 .header-query {
     background: #fff;
-    padding: 0 10px;
+    padding: 10px;
     border-radius: 3px;
     margin-bottom: 5px;
+
+    .el-form-item {
+        margin-bottom: 0 !important;
+    }
 }
 
 .bottom-pagination {
