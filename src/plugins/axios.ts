@@ -9,6 +9,7 @@ let homeBaseUrl = 'http://192.168.0.127:3001'
 const instance = axios.create({
     withCredentials: true,
     baseURL: process.env.NODE_ENV == 'product' ? proBaseUrl : devBaseUrl,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json; charset=UTF-8'
     },
@@ -42,6 +43,14 @@ instance.interceptors.response.use((response: AxiosResponse) => {
                 router.replace({
                     path: '/login'
                 })
+                break
+            case 503:
+                Message({
+                    message: '服务器异常，请求超时',
+                    type: "error",
+                    duration: 2 * 1000
+                });
+                break
         }
     }
     return Promise.reject(error.response && error.response.data)

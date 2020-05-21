@@ -83,7 +83,7 @@ export default class ResetPwd extends Vue {
     private sendEmit() {
         return;
     }
-    handleAvatarSuccess(res, file) {
+    handleAvatarSuccess({ res, file }: { res: any; file: any }) {
         if (res.code == 0) {
             this.editMctForm.merchant_icon = res.result.data;
         } else {

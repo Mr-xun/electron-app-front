@@ -115,7 +115,7 @@ export default class MerchantList extends Vue {
     };
     private editMctVisible: boolean = false;
     private editMctTitle: string = "新增商户";
-    private editMctId: string = null;
+    private editMctId: string = "";
     private startSearch() {
         this.getMerchantList();
     }
@@ -132,7 +132,7 @@ export default class MerchantList extends Vue {
     }
     private addMerchant() {
         this.editMctForm = this.resetForm();
-        this.editMctId = null;
+        this.editMctId = "";
         this.editMctVisible = true;
         this.editMctTitle = "新增商户";
     }

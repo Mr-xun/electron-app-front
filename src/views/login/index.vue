@@ -73,6 +73,7 @@ export default class Login extends Vue {
         };
         (this.$refs["loginForm"] as any).validate(async (valid: boolean) => {
             if (valid) {
+                this.singining = true;
                 const result = await UserModule.Login(params);
                 if (this.checkedPwd == true) {
                     let encrypt_pwd = encrypt(
@@ -88,6 +89,7 @@ export default class Login extends Vue {
                 if (result) {
                     this.$router.push({ path: "/" });
                 }
+                this.singining = false;
             } else {
                 return false;
             }
