@@ -6,8 +6,12 @@ import "@/styles/index.scss";
 import '@/assets/icon/iconfont.css'
 import './plugins/element';
 import "normalize.css";
-Vue.config.productionTip = false;
 
+import * as filters from "@/filters";
+Vue.config.productionTip = false;
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, (filters as { [key: string]: Function })[key]);
+});
 new Vue({
     router,
     store,

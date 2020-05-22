@@ -25,6 +25,15 @@ export default {
         //重置密码
         return axios.post('/user/resetpwd', params);
     },
+    /*****************基础数据*******************************/
+    base_brandTypeList() {
+        //品牌基本类型
+        return axios.get('/basedata/brand')
+    },
+    base_merchantTypeList() {
+        //商户基本类型
+        return axios.get('/basedata/merchant')
+    },
     /*****************商户*******************************/
     merchant_list(params: { name?: string, contact?: string, pageNum?: string, pageSize?: string }) {
         //列表
@@ -59,4 +68,41 @@ export default {
         //删除
         return axios.post('/merchant/del', params)
     },
+    /*****************商品*******************************/
+    goods_list(params: { goods_name?: string, goods_brand?: string, goods_num?: string, pageNum?: string, pageSize?: string }) {
+        //列表
+        return axios.post('/goods/list', params)
+    },
+    goods_create(params: any) {
+        //新增
+        return axios.post('/goods/add', params)
+    },
+    goods_update(params: any) {
+        //更新
+        return axios.post('/goods/update', params)
+    },
+    goods_del(params: any) {
+        //删除
+        return axios.post('/goods/del', params)
+    },
+    goods_detail(params: any) {
+        //详情
+        return axios.post('/goods/detail', params)
+    },
+    /*****************品牌*******************************/
+    brand_list(params: { brand_name?: string, pageNum?: string, pageSize?: string }) {
+        //列表
+        return axios.post('/brand/list', params)
+    },
+    brand_create(params: any) {
+        //新建
+        return axios.post('/brand/add', params)
+    }, brand_update(params: any) {
+        //更新
+        return axios.post('/brand/update', params)
+    }, brand_del(params: any) {
+        //删除
+        return axios.post('/brand/del', params)
+    },
+
 }

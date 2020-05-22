@@ -91,6 +91,14 @@ export const routes: RouteConfig[] = [
                 title: '商户档案',
                 icon: 'kehu',
             },
+        }, {
+            path: 'brand',
+            name: 'baseFile-brand',
+            component: () => import("@/views/baseFile/brand/index.vue"),
+            meta: {
+                title: '品牌档案',
+                icon: 'kehu',
+            },
         }
         ]
     },

@@ -1,14 +1,14 @@
 <template>
     <div class="merchant-container">
         <div class="header-query">
-            <el-form :inline="true" :model="queryForm" class="demo-form-inline" label-width="60px">
+            <el-form :inline="true" :model="queryForm" class="demo-form-inline">
                 <el-form-item label="名称">
                     <el-input size="medium" clearable v-model="queryForm.name" placeholder="名称"></el-input>
                 </el-form-item>
                 <el-form-item label="联系人">
                     <el-input size="medium" clearable v-model="queryForm.contact" placeholder="联系人"></el-input>
                 </el-form-item>
-                <el-form-item label=" ">
+                <el-form-item label=" " label-width="15px">
                     <el-button size="medium" type="primary" @click="startSearch">查询</el-button>
                     <el-button size="medium" type="success" @click="addMerchant">新增</el-button>
                 </el-form-item>
@@ -70,8 +70,9 @@
 </template>
 <script lang='ts'>
 import { Vue, Component } from "vue-property-decorator";
-import MerchantEdit from "@/components/MerchantEdit/index.vue";
+import MerchantEdit from "./components/MerchantEdit.vue";
 import api from "@/api";
+import { BaseDataModule } from "@/store/modules/base";
 interface IeditMctForm {
     merchant_id?: string;
     merchant_name: string;
@@ -94,13 +95,7 @@ export default class MerchantList extends Vue {
         contact: ""
     };
     private editMctForm: IeditMctForm = {
-        merchant_name: "",
-        merchant_icon: "",
-        merchant_concact: "",
-        merchant_concactMethod: "",
-        merchant_area: "",
-        merchant_adress: "",
-        merchant_note: ""
+        merchant_name: ""
     };
     private tableLoading: boolean = false;
     private tableData: Array<any> = [];
@@ -150,10 +145,12 @@ export default class MerchantList extends Vue {
         })
             .then(async () => {
                 let params = {
-                    id: row._id
+                    id: row._id,
+                    merchant_code: row.merchant_code
                 };
                 api.merchant_del(params).then(res => {
                     this.getMerchantList();
+                    BaseDataModule.getMerchantType();
                     this.$message({
                         type: "success",
                         message: "删除成功!"

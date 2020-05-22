@@ -2,6 +2,8 @@ import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-dec
 import { getToken, setToken, removeToken } from '@/utils/index';
 import api from '@/api'
 import store from '@/store'
+import { BaseDataModule } from './base';
+
 export interface IUserState {
     token: string,
     userInfo: Record<string | number | symbol, any>
@@ -43,6 +45,8 @@ class User extends VuexModule implements IUserState {
         try {
             const { data } = await api.user_info()
             this.SET_USERINFO(data.userInfo)
+            BaseDataModule.getBrandType()
+            BaseDataModule.getMerchantType()
             return true
         } catch (error) {
             console.log(error)

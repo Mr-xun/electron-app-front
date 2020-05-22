@@ -1,41 +1,69 @@
 <template>
     <div class="goods-container main-content-container">
         <div class="header-query">
-            <el-form :inline="true" :model="goodsForm" class="demo-form-inline" label-width="80px">
+            <el-form :inline="true" :model="queryForm" class="demo-form-inline">
                 <el-form-item label="货号">
-                    <el-input size="medium" v-model="goodsForm.code" placeholder="货号"></el-input>
+                    <el-input size="medium" clearable v-model="queryForm.goods_num" placeholder="货号"
+                        style="width:150px;">
+                    </el-input>
                 </el-form-item>
                 <el-form-item label="商品名称">
-                    <el-input size="medium" v-model="goodsForm.name" placeholder="商品名称"></el-input>
+                    <el-input size="medium" clearable v-model="queryForm.goods_name" placeholder="商品名称"
+                        style="width:170px;">
+                    </el-input>
                 </el-form-item>
                 <el-form-item label="品牌">
-                    <el-select size="medium" v-model="goodsForm.brand" placeholder="品牌">
-                        <el-option label="伊利" value="伊利"></el-option>
-                        <el-option label="蒙牛" value="蒙牛"></el-option>
+                    <el-select size="medium" clearable v-model="queryForm.goods_brand" placeholder="品牌"
+                        style="width:150px;">
+                        <el-option v-for="(item,index) in $store.state.baseData.brandTypes" :key="index"
+                            :label="item.brand_name" :value="item.brand_code"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label=" ">
+                <el-form-item label=" " label-width="15px">
                     <el-button size="medium" type="primary" @click="startSearch">查询</el-button>
-                    <el-button size="medium" type="success" @click="startSearch">新增</el-button>
+                    <el-button size="medium" type="success" @click="addGoods">新增</el-button>
                 </el-form-item>
             </el-form>
         </div>
         <div class="list-wrap">
-            <el-table :data="tableData" border style="width: 100%" stripe>
-                <el-table-column align="center" prop="goods_code" label="货号"></el-table-column>
-                <el-table-column align="center" prop="name" label="名称"></el-table-column>
-                <el-table-column align="center" prop="brand" label="品牌"></el-table-column>
-                <el-table-column align="center" prop="inventory_count" label="库存"></el-table-column>
-                <el-table-column align="center" prop="brand_code" label="品牌编码"></el-table-column>
-                <el-table-column align="center" prop="specifica" label="规格"></el-table-column>
-                <el-table-column align="center" prop="primecost" label="进货价"></el-table-column>
-                <el-table-column align="center" prop="retail_price" label="零售价"></el-table-column>
-                <el-table-column align="center" prop="trade_price" label="批发价（通用）"></el-table-column>
-                <el-table-column align="center" prop="owncode" label="自编码"></el-table-column>
-                <el-table-column align="center" label="操作">
-                    <template>
-                        <el-button type="text">编辑</el-button>
-                        <el-button type="text" style="color:#f56c6c;">删除</el-button>
+            <el-table :data="tableData" border style="width: 100%" stripe v-loading="tableLoading"
+                element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+                element-loading-background="rgba(255, 255, 255, 0.5)">
+                <el-table-column min-width="80" align="center" prop="goods_num" label="货号"></el-table-column>
+                <el-table-column min-width="160" align="center" prop="goods_name" label="名称"></el-table-column>
+                <el-table-column min-width="120" align="center" prop="goods_brandName" label="品牌"></el-table-column>
+                <el-table-column min-width="80" align="center" prop="goods_brandCode" label="品牌编码"></el-table-column>
+                <el-table-column min-width="80" align="center" prop="goods_inventory" label="库存">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.goods_inventory >=0? scope.row.goods_inventory: "---"}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="goods_specifica" label="规格">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.goods_specifica |specificaFilter}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="goods_iptPrice" label="进货价">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.goods_iptPrice | monneyFilter}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="goods_optPrice" label="零售价">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.goods_optPrice | monneyFilter}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="goods_pubTradePrice" label="批发价（通用）">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.goods_pubTradePrice | monneyFilter}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column min-width="120" align="center" prop="goods_code" label="自编码"></el-table-column>
+                <el-table-column min-width="160" align="center" prop="create_time" label="创建时间"></el-table-column>
+                <el-table-column min-width="120" align="center" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="editGoods(scope.row)">编辑</el-button>
+                        <el-button type="text" style="color:#f56c6c;" @click="delGoods(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -45,70 +73,40 @@
                     :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper"
                     :total="pagination.totalSize"></el-pagination>
             </div>
+            <goods-edit :editGoodsVisible.sync="editGoodsVisible" :editGoodsForm="editGoodsForm"
+                :editGoodsTitle="editGoodsTitle" :editGoodsId="editGoodsId" @initList="getGoodsList"></goods-edit>
         </div>
     </div>
 </template>
 <script lang='ts'>
 import { Vue, Component } from "vue-property-decorator";
+import GoodsEdit from "./components/GoodsEdit.vue";
+import api from "@/api";
+interface IeditGoodsForm {
+    goods_id?: string;
+    goods_name: string;
+    goods_brandCode: string;
+    goods_inventory?: number;
+    goods_specifica?: number;
+    goods_iptPrice?: number;
+    goods_optPrice?: number;
+    goods_pubTradePrice?: number;
+    goods_tradePriceTemps?: any;
+}
 @Component({
-    name: "GoodList"
+    name: "GoodList",
+    components: {
+        GoodsEdit
+    }
 })
 export default class GoodList extends Vue {
-    private goodsForm: {} = {
-        code: "",
-        name: "",
-        brand: ""
+    private queryForm: {} = {
+        goods_num: "",
+        goods_name: "",
+        goods_brand: ""
     };
-    private tableData: Array<any> = [
-        {
-            goods_code: "001",
-            name: "伊利小布丁",
-            brand: "伊利",
-            brand_code: "101",
-            inventory_count: 999,
-            specifica: "1*40",
-            primecost: "44.00",
-            retail_price: "48.00",
-            trade_price: "46.00",
-            owncode: "1001"
-        },
-        {
-            goods_code: "002",
-            name: "伊利梦工厂",
-            brand: "伊利",
-            brand_code: "101",
-            inventory_count: 999,
-            specifica: "1*40",
-            primecost: "44.00",
-            retail_price: "48.00",
-            trade_price: "46.00",
-            owncode: "1001"
-        },
-        {
-            goods_code: "003",
-            name: "蒙牛大布丁",
-            brand: "蒙牛",
-            brand_code: "101",
-            inventory_count: 999,
-            specifica: "1*40",
-            primecost: "44.00",
-            retail_price: "48.00",
-            trade_price: "46.00",
-            owncode: "1001"
-        },
-        {
-            goods_code: "004",
-            name: "华英迷你",
-            brand: "华英",
-            brand_code: "101",
-            inventory_count: 999,
-            specifica: "1*40",
-            primecost: "44.00",
-            retail_price: "48.00",
-            trade_price: "46.00",
-            owncode: "1001"
-        }
-    ];
+    private tableLoading: boolean = false;
+    private tableData: Array<any> = [];
     private pagination: {
         totalSize: number;
         currentPage: number;
@@ -118,12 +116,95 @@ export default class GoodList extends Vue {
         currentPage: 1,
         pageSize: 5
     };
-    private startSearch() {}
+    private editGoodsVisible: boolean = false;
+    private editGoodsForm: IeditGoodsForm = {
+        goods_name: "",
+        goods_brandCode: ""
+    };
+    private editGoodsTitle: string = "新建商品";
+    private editGoodsId: string = "";
+    private resetForm() {
+        return {
+            goods_id: "",
+            goods_name: "",
+            goods_brandCode: "",
+            goods_inventory: 0,
+            goods_specifica: 0,
+            goods_iptPrice: 0,
+            goods_optPrice: 0,
+            goods_pubTradePrice: 0,
+            goods_tradePriceTemps: []
+        };
+    }
+    private startSearch() {
+        this.getGoodsList();
+    }
+    private getGoodsList() {
+        this.tableLoading = true;
+        let params = JSON.parse(JSON.stringify(this.queryForm));
+        params.pageSize = this.pagination.pageSize;
+        params.pageNum = this.pagination.currentPage;
+        api.goods_list(params)
+            .then(res => {
+                let { list, total } = res.data;
+                this.tableData = list;
+                this.pagination.totalSize = total;
+                this.tableLoading = false;
+            })
+            .catch(err => {
+                console.log(err);
+                this.tableData = [];
+                this.pagination.totalSize = 0;
+                this.tableLoading = false;
+            });
+    }
+    private addGoods() {
+        this.editGoodsForm = this.resetForm();
+        this.editGoodsId = "";
+        this.editGoodsVisible = true;
+        this.editGoodsTitle = "新增商户";
+    }
+    private editGoods(row: any) {
+        this.editGoodsId = row._id;
+        this.editGoodsVisible = true;
+        this.editGoodsTitle = "编辑商户";
+        this.editGoodsForm = JSON.parse(JSON.stringify(row));
+    }
+    private delGoods(row: any) {
+        this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+        })
+            .then(async () => {
+                let params = {
+                    id: row._id
+                };
+                api.goods_del(params).then(res => {
+                    this.getGoodsList();
+                    this.$message({
+                        type: "success",
+                        message: "删除成功!"
+                    });
+                });
+            })
+            .catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消删除"
+                });
+            });
+    }
     handleSizeChange(val: number) {
         this.pagination.pageSize = val;
+        this.getGoodsList();
     }
     handleCurrentChange(val: number) {
         this.pagination.currentPage = val;
+        this.getGoodsList();
+    }
+    mounted() {
+        this.getGoodsList();
     }
 }
 </script>

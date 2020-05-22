@@ -42,6 +42,7 @@
 </template>
 <script lang='ts'>
 import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
+import { BaseDataModule } from "@/store/modules/base";
 import api from "@/api";
 interface IeditMctForm {
     merchant_id?: string;
@@ -58,9 +59,9 @@ let proBaseUrl = "http://49.233.16.84:3001";
 let homeBaseUrl = "http://192.168.0.127:3001";
 let baseUrl = process.env.NODE_ENV == "product" ? proBaseUrl : devBaseUrl;
 @Component({
-    name: "ResetPwd"
+    name: "MerchantEdit"
 })
-export default class ResetPwd extends Vue {
+export default class MerchantEdit extends Vue {
     @Prop() editMctForm!: IeditMctForm;
     @Prop({ default: false, type: Boolean }) editMctVisible!: boolean;
     @Prop({ default: "新增商户", type: String }) editMctTitle!: string;
@@ -120,6 +121,7 @@ export default class ResetPwd extends Vue {
                         this.switch = !this.switch;
                         this.sendEmit();
                     }
+                    BaseDataModule.getMerchantType();
                 } catch (error) {
                     console.log(error);
                 }
