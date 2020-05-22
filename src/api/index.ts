@@ -21,6 +21,14 @@ export default {
         //注册
         return axios.post('/user/register', params);
     },
+    user_update(params: any) {
+        //更新
+        return axios.post('/user/update', params);
+    },
+    user_del(params: any) {
+        //删除用户
+        return axios.post('/user/del', params);
+    },
     user_resetPwd(params: { userId?: string, account?: string, verify_one: string, verify_two: string, verify_three: string }) {
         //重置密码
         return axios.post('/user/resetpwd', params);

@@ -113,19 +113,11 @@ export const routes: RouteConfig[] = [
         children: [{
             path: 'list',
             name: 'user-list',
-            component: () => import("@/views/user/list.vue"),
+            component: () => import("@/views/user/index.vue"),
             meta: {
                 title: '列表'
             }
-        }, {
-            path: 'about',
-            name: 'user-about',
-            component: () => import("@/views/About.vue"),
-            meta: {
-                title: '关于'
-            }
-
-        }
+        },
         ]
     }, {
         path: '/login',

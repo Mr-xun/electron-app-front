@@ -144,7 +144,7 @@ export default class GoodsEdit extends Vue {
                                 type: "success",
                                 message: "商品编辑完成"
                             });
-                            this.switch = !this.switch;
+                            this.closeEditGoods()
                             this.sendEmit();
                         } else {
                             await api.goods_create(params);
@@ -152,7 +152,7 @@ export default class GoodsEdit extends Vue {
                                 type: "success",
                                 message: "商品新增完成"
                             });
-                            this.switch = !this.switch;
+                            this.closeEditGoods()
                             this.sendEmit();
                         }
                     } catch (error) {

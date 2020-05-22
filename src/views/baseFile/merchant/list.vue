@@ -94,9 +94,7 @@ export default class MerchantList extends Vue {
         name: "",
         contact: ""
     };
-    private editMctForm: IeditMctForm = {
-        merchant_name: ""
-    };
+    
     private tableLoading: boolean = false;
     private tableData: Array<any> = [];
     private pagination: {
@@ -107,6 +105,9 @@ export default class MerchantList extends Vue {
         totalSize: 0,
         currentPage: 1,
         pageSize: 10
+    };
+    private editMctForm: IeditMctForm = {
+        merchant_name: ""
     };
     private editMctVisible: boolean = false;
     private editMctTitle: string = "新增商户";

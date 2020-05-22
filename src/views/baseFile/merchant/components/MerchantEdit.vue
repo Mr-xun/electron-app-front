@@ -7,7 +7,7 @@
             </el-form-item>
             <el-form-item label="商户图标">
                 <el-upload class="avatar-uploader" :headers="{authorization: `Bearer ${$store.state.user.token}`}"
-                    :action="`http://192.168.13.241:3001/file/upload`" :show-file-list="false"
+                    :action="`http://192.168.0.127:3001/file/upload`" :show-file-list="false"
                     accept="image/png,image/gif,image/jpg,image/jpeg" :on-success="handleAvatarSuccess">
                     <el-image v-if="editMctForm.merchant_icon" class="avatar" style="width: 100px; height: 100px"
                         :src="editMctForm.merchant_icon" fit="cover">
@@ -84,7 +84,7 @@ export default class MerchantEdit extends Vue {
     private sendEmit() {
         return;
     }
-    handleAvatarSuccess({ res, file }: { res: any; file: any }) {
+    handleAvatarSuccess(res: any,file: any ) {
         if (res.code == 0) {
             this.editMctForm.merchant_icon = res.result.data;
         } else {
@@ -110,7 +110,7 @@ export default class MerchantEdit extends Vue {
                             type: "success",
                             message: "商户编辑完成"
                         });
-                        this.switch = !this.switch;
+                        this.closeEditMct()
                         this.sendEmit();
                     } else {
                         await api.merchant_create(params);
@@ -118,7 +118,7 @@ export default class MerchantEdit extends Vue {
                             type: "success",
                             message: "商户新增完成"
                         });
-                        this.switch = !this.switch;
+                        this.closeEditMct()
                         this.sendEmit();
                     }
                     BaseDataModule.getMerchantType();

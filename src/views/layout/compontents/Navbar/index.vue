@@ -5,7 +5,11 @@
         <div class="right-menu">
             <el-dropdown trigger="click">
                 <div class="avatar-wrapper">
-                    <img src="@/assets/images/user-avatar.png" class="user-avatar" />
+                    <el-image fit="cover" class="user-avatar" :src="$store.state.user.userInfo.avatar">
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+              </div>
+            </el-image>
                     <span class="user-name">{{$store.state.user.userInfo.username }}</span>
                     <i class="el-icon-arrow-down el-icon--right"></i>
                 </div>
