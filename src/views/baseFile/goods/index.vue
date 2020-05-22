@@ -137,6 +137,7 @@ export default class GoodList extends Vue {
         };
     }
     private startSearch() {
+        this.pagination.currentPage = 1;
         this.getGoodsList();
     }
     private getGoodsList() {

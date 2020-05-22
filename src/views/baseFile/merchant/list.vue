@@ -112,6 +112,7 @@ export default class MerchantList extends Vue {
     private editMctTitle: string = "新增商户";
     private editMctId: string = "";
     private startSearch() {
+        this.pagination.currentPage = 1;
         this.getMerchantList();
     }
     private resetForm() {

@@ -80,6 +80,7 @@ export default class MerchantList extends Vue {
     private editBrandTitle: string = "新增品牌";
     private editBrandId: string = "";
     private startSearch() {
+        this.pagination.currentPage = 1;
         this.getBrandList();
     }
     private resetForm() {
