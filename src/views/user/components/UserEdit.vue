@@ -38,7 +38,7 @@
       </el-form-item>
       <el-form-item label="用户角色" prop="role">
         <el-select v-model="editUserForm.role" placeholder="请选择用户角色">
-          <el-option label="管理员" value="admin"></el-option>
+          <el-option label="管理员" value="1"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
@@ -50,7 +50,7 @@
 </template>
 <script lang='ts'>
 import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
-import { BaseDataModule } from "@/store/modules/base";
+import { UserModule } from "@/store/modules/user";
 import api from "@/api";
 interface IeditUserForm {
   user_id?: string;
@@ -128,6 +128,7 @@ export default class UserEdit extends Vue {
             this.closeEditUser();
             this.sendEmit();
           }
+         UserModule.getUserInfo()
         } catch (error) {
           console.log(error);
         }

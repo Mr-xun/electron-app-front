@@ -17,7 +17,7 @@
                     <router-link to="/">
                         <el-dropdown-item icon="el-icon-s-home">首页</el-dropdown-item>
                     </router-link>
-                    <el-dropdown-item icon="el-icon-user" divided>{{$store.state.user.userInfo.role ==1?'管理员':'平民' }}</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-user" divided>{{$store.state.user.userInfo.role_name || "---" }}</el-dropdown-item>
                     <el-dropdown-item icon="lf-icon-tuichu" divided @click.native="goLogin">
                         <span >退出</span>
                     </el-dropdown-item>

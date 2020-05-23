@@ -112,9 +112,9 @@ export default class GoodList extends Vue {
         currentPage: number;
         pageSize: number;
     } = {
-        totalSize: 4,
+        totalSize: 0,
         currentPage: 1,
-        pageSize: 5
+        pageSize: 10
     };
     private editGoodsVisible: boolean = false;
     private editGoodsForm: IeditGoodsForm = {

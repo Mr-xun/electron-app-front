@@ -7,6 +7,7 @@ import '@/assets/icon/iconfont.css'
 import './plugins/element';
 import "normalize.css";
 
+
 import * as filters from "@/filters";
 Vue.config.productionTip = false;
 Object.keys(filters).forEach(key => {

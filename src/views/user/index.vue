@@ -32,7 +32,11 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="username" label="用户名"></el-table-column>
-        <el-table-column align="center" prop="role" label="角色"></el-table-column>
+        <el-table-column align="center" prop="role_name" label="角色">
+          <template slot-scope="scope">
+            <span>{{scope.row.role_name || "未知"}}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="phone" label="联系方式">
           <template slot-scope="scope">
             <span>{{scope.row.phone || "---"}}</span>
