@@ -77,7 +77,7 @@ export default {
         return axios.post('/merchant/del', params)
     },
     /*****************商品*******************************/
-    goods_list(params: { goods_name?: string, goods_brand?: string, goods_num?: string, pageNum?: string, pageSize?: string }) {
+    goods_list(params: { goods_name?: string, goods_brand?: string, goods_num?: string,goods_sign?:string, pageNum?: string, pageSize?: string }) {
         //列表
         return axios.post('/goods/list', params)
     },
