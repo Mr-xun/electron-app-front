@@ -152,15 +152,29 @@ export default class Home extends Vue {
         let params = {
           user_id: row._id
         };
-        api.user_del(params).then(res => {
-          this.getUserList();
-          this.$message({
-            type: "success",
-            message: "删除成功!"
+        api
+          .user_del(params)
+          .then(res => {
+            this.getUserList();
+            this.$notify({
+              title: "成功",
+              message: "删除成功",
+              position: "bottom-right",
+              type: "success"
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            this.$notify({
+              title: "成功",
+              message: "删除失败",
+              position: "bottom-right",
+              type: "warning"
+            });
           });
-        });
       })
-      .catch(() => {
+      .catch(err => {
+        console.log(err);
         this.$message({
           type: "info",
           message: "已取消删除"

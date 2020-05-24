@@ -112,5 +112,17 @@ export default {
         //删除
         return axios.post('/brand/del', params)
     },
-
+    /*****************批发订单*******************************/
+    wholesaleOrder_getNum(){
+        //获取订单编号
+        return axios.get('/wholesale/orderNum')
+    },
+    wholesaleOrder_createOrder(params:any){
+        //创建订单记录
+        return axios.post('/wholesale/createOrder',params)
+    },
+    wholesaleOrder_getOrder(params){
+        //获取订单记录
+        return axios.post('/wholesale/list',params)
+    }
 }

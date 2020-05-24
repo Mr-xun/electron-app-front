@@ -102,8 +102,7 @@ export default class UserEdit extends Vue {
       const ref: any = this.$refs["editUserForm"];
       ref.resetFields();
     });
-      this.switch = !this.switch;
-
+    this.switch = !this.switch;
   }
   private submitUser() {
     let params: any = this.editUserForm;
@@ -113,24 +112,34 @@ export default class UserEdit extends Vue {
           if (this.editUserId) {
             params.user_id = this.editUserId;
             await api.user_update(params);
-            this.$message({
-              type: "success",
-              message: "用户编辑完成"
+            this.$notify({
+              title: "成功",
+              message: "用户编辑完成",
+              position: "bottom-right",
+              type: "success"
             });
             this.closeEditUser();
             this.sendEmit();
           } else {
             await api.user_register(params);
-            this.$message({
-              type: "success",
-              message: "用户新增完成"
+            this.$notify({
+              title: "成功",
+              message: "用户新增完成",
+              position: "bottom-right",
+              type: "success"
             });
             this.closeEditUser();
             this.sendEmit();
           }
-         UserModule.getUserInfo()
+          UserModule.getUserInfo();
         } catch (error) {
           console.log(error);
+          this.$notify({
+            title: "失败",
+            message: "系统异常，操作失败",
+            position: "bottom-right",
+            type: "error"
+          });
         }
       } else {
         return false;

@@ -26,10 +26,10 @@ module.exports = {
         electronBuilder: {
             builderOptions: {
                 win: {
-                    icon: './public/favicon.ico'
+                    icon: './public/fav.ico'
                 },
                 mac: {
-                    icon: './public/favicon.ico'
+                    icon: './public/fav.ico'
                 },
                 productName: 'AppDemo'
             }

@@ -1,9 +1,9 @@
 <template >
   <div class="sell-container main-content-container">
     <div class="header-contenet header-query">
-      <el-form :inline="true" :model="orderForm" class="demo-form-inline">
+      <el-form :inline="true" :model="orderForm" class="query-form-inline">
         <el-form-item label="单据号">
-          <el-input size="medium" v-model="orderForm.orderNum" placeholder="单据号"></el-input>
+          <el-input size="medium" v-model="orderForm.orderNum" placeholder="单据号" disabled></el-input>
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
@@ -134,14 +134,16 @@
       <el-button type="info" @click="clearGoodsAll">清空</el-button>
       <el-button type="success" @click="reviewedPass" v-if="!orderStatus">审核</el-button>
       <el-button type="warning" @click="rejectPass" v-if="orderStatus">驳回</el-button>
-      <el-button type="success" @click="reviewedPass" v-if="orderStatus">打印</el-button>
+      <el-button type="success" @click="startPrint" v-if="orderStatus">打印</el-button>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { BaseDataModule } from "@/store/modules/base";
+import { UserModule } from "@/store/modules/user";
 import api from "@/api";
+import moment from "moment";
 interface IOrderForm {
   orderNum: string;
   date: Date;
@@ -154,9 +156,12 @@ export default class Sell extends Vue {
   private orderForm: IOrderForm = {
     orderNum: "",
     date: new Date(),
-    merchant: BaseDataModule.merchantTypes && BaseDataModule.merchantTypes.length?BaseDataModule.merchantTypes[0].merchant_code : ""
+    merchant:
+      BaseDataModule.merchantTypes && BaseDataModule.merchantTypes.length
+        ? BaseDataModule.merchantTypes[0].merchant_code
+        : ""
   };
-  private orderStatus: boolean = false;
+  private orderStatus: boolean = false; //订单状态
   private deviceChooseRow = 0;
   private orderList = [
     {
@@ -288,13 +293,64 @@ export default class Sell extends Vue {
     this.orderStatus = false;
   }
   private reviewedPass() {
-    this.orderStatus = true;
+    let verify = this.orderList.every(
+      item => item.goods_name && item.goods_num && item.sum_money
+    );
+    if (verify) {
+      this.orderStatus = true;
+    } else {
+      this.$message({
+        type: "warning",
+        message: "订单信息必须完整，价值不能为0"
+      });
+    }
+  }
+  private async startPrint() {
+    let parmas = {
+      order_num: this.orderForm.orderNum,
+      order_content: this.orderList,
+      create_user: UserModule.userInfo.username,
+      merchant_code: this.orderForm.merchant
+    };
+    try {
+      await api.wholesaleOrder_createOrder(parmas);
+      this.$notify({
+        title: "成功",
+        message: "订单打印提交完成",
+        position: "bottom-right",
+        type: "success"
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  private getOrderNum() {
+    let orderNumCatct = `S000${moment().format("YYMMDD")}`;
+    api
+      .wholesaleOrder_getNum()
+      .then(res => {
+        let { orderNum } = res.data;
+        this.orderForm.orderNum = orderNum;
+      })
+      .catch(err => {
+        console.log(err);
+        this.orderForm.orderNum = orderNumCatct;
+      });
+  }
+  created() {
+    this.getOrderNum();
   }
   mounted() {}
 }
 </script>
 <style lang="scss">
 .sell-container {
+  .query-form-inline {
+    .el-input__inner {
+      color: #000;
+    }
+  }
+
   .order-status {
     background: #fff;
     text-align: center;
