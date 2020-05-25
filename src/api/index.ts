@@ -77,7 +77,7 @@ export default {
         return axios.post('/merchant/del', params)
     },
     /*****************商品*******************************/
-    goods_list(params: { goods_name?: string, goods_brand?: string, goods_num?: string,goods_sign?:string, pageNum?: string, pageSize?: string }) {
+    goods_list(params: { goods_name?: string, goods_brand?: string, goods_num?: string, goods_sign?: string, pageNum?: string, pageSize?: string }) {
         //列表
         return axios.post('/goods/list', params)
     },
@@ -113,16 +113,16 @@ export default {
         return axios.post('/brand/del', params)
     },
     /*****************批发订单*******************************/
-    wholesaleOrder_getNum(){
+    wholesaleOrder_getNum() {
         //获取订单编号
         return axios.get('/wholesale/orderNum')
     },
-    wholesaleOrder_createOrder(params:any){
+    wholesaleOrder_createOrder(params: any) {
         //创建订单记录
-        return axios.post('/wholesale/createOrder',params)
+        return axios.post('/wholesale/createOrder', params)
     },
-    wholesaleOrder_getOrder(params){
+    wholesaleOrder_getOrder(params: any) {
         //获取订单记录
-        return axios.post('/wholesale/list',params)
+        return axios.post('/wholesale/list', params)
     }
 }

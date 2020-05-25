@@ -6,12 +6,12 @@ import { BaseDataModule } from './base';
 
 export interface IUserState {
     token: string,
-    userInfo: Record<string | number | symbol, any>
+    userInfo: any
 }
 @Module({ dynamic: true, store, name: "user" })
 class User extends VuexModule implements IUserState {
     public token = getToken() || "";
-    public userInfo = {};
+    public userInfo: any = {};
     @Mutation
     private SET_TOKEN(token: string) {
         this.token = token

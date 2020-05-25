@@ -7,14 +7,22 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { RouteRecord, Route } from "vue-router";
-import api from "@/api";
+declare const document: any;
 @Component({
-    components: {
-    }
+    components: {}
 })
 export default class App extends Vue {
     private userList = [];
-    mounted() {}
+    mounted() {
+        try {
+            document.body.removeChild(document.getElementById('appLoading'))
+            setTimeout(function () {
+                document.getElementById('app').style.display = "block";
+            }, 1000)
+        } catch (e) {
+            console.log(e)
+        }
+    }
     @Watch("$route")
     private changeRoute(route: Route) {}
 }

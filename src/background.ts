@@ -1,15 +1,16 @@
 'use strict';
 
-import { app, protocol, BrowserWindow } from 'electron';
+import { app, protocol, BrowserWindow, Menu, Tray } from 'electron';
 import {
-    createProtocol,
+    createProtocol
     /* installVueDevtools */
 } from 'vue-cli-plugin-electron-builder/lib';
+import path from 'path'
 const isDevelopment = process.env.NODE_ENV !== 'production';
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win: BrowserWindow | null;
-
+let win: BrowserWindow | null | any;
+let tray: any = null
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }]);
 function loadMenus() {
@@ -19,10 +20,13 @@ loadMenus();
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
-        width: 1200, height: 800, webPreferences: {
+        width: 1200,
+        height: 800,
+        webPreferences: {
             nodeIntegration: true,
-            webSecurity: false,
+            webSecurity: false
         },
+        icon: path.posix.join(__dirname, 'icon/favicon.ico')
     });
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         // Load the url of the dev server if in development mode
@@ -35,10 +39,34 @@ function createWindow() {
         // Load the index.html when not in development
         win.loadURL('app://./index.html');
     }
-
+    // win.setAppDetails({
+    //     appId: '123',
+    //     relaunchDisplayName: '鲁丰冷食管存系统',
+    //     relaunchCommand: 'management Setup 0.1.0.exe',
+    //     appIconPath: path.posix.join(__dirname, 'icon/favicon.ico')
+    // })
     win.on('closed', () => {
         win = null;
     });
+    // 当我们点击关闭时触发close事件，我们按照之前的思路在关闭时，隐藏窗口，隐藏任务栏窗口
+    // event.preventDefault(); 禁止关闭行为(非常必要，因为我们并不是想要关闭窗口，所以需要禁止默认行为)
+    win.on('close', (event: any) => {
+        win.hide();
+        win.setSkipTaskbar(true);
+        event.preventDefault();
+    });
+    //创建系统通知区菜单
+    tray = new Tray(path.posix.join(__dirname, 'icon/favicon.ico'));
+    const contextMenu = Menu.buildFromTemplate([
+        { label: '退出', click: () => { win.destroy() } },//我们需要在这里有一个真正的退出（这里直接强制退出）
+    ])
+    tray.setToolTip('鲁丰冷食管存系统')
+    tray.setContextMenu(contextMenu)
+    tray.on('click', () => { //我们这里模拟桌面程序点击通知区图标实现打开关闭应用的功能
+        win.isVisible() ? win.hide() : win.show()
+        win.isVisible() ? win.setSkipTaskbar(false) : win.setSkipTaskbar(true);
+    })
+
 }
 
 // Quit when all windows are closed.
@@ -74,7 +102,6 @@ app.on('ready', async () => {
         // } catch (e) {
         //   console.error('Vue Devtools failed to install:', e.toString())
         // }
-
     }
     createWindow();
 });
@@ -83,7 +110,7 @@ app.on('ready', async () => {
 if (isDevelopment) {
     if (process.platform === 'win32') {
         process.on('message', (data) => {
-            if ((data) === 'graceful-exit') {
+            if (data === 'graceful-exit') {
                 app.quit();
             }
         });

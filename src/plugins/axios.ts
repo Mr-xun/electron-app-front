@@ -6,9 +6,10 @@ import { UserModule } from './../store/modules/user';
 let devBaseUrl = 'http://192.168.13.241:3001'
 let proBaseUrl = 'http://49.233.16.84:3001'
 let homeBaseUrl = 'http://192.168.0.127:3001'
+console.log("node-env:"+process.env.NODE_ENV)
 const instance = axios.create({
     withCredentials: true,
-    baseURL: process.env.NODE_ENV == 'product' ? proBaseUrl : homeBaseUrl,
+    baseURL: process.env.NODE_ENV == 'production' ? proBaseUrl : devBaseUrl,
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json; charset=UTF-8'
@@ -23,7 +24,6 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
 })
 instance.interceptors.response.use((response: AxiosResponse) => {
     const res = response.data;
-    console.log(res, '222')
     if (res.code != 0) {
         Message({
             message: res.msg || "Error",
