@@ -181,7 +181,7 @@ export default class Sell extends Vue {
             buy_counter: 0,
             goods_unitprice: 0,
             sum_money: 0,
-            endCallback: this.surePrint()
+            endCallback: this.surePrint
         }
     ];
     printObj = {

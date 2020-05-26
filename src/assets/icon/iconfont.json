@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1183036",
+      "name": "品牌",
+      "font_class": "pinpai",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "1667293",
+      "name": "用户列表",
+      "font_class": "yonghuliebiao",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
       "icon_id": "759614",
       "name": "客户",
       "font_class": "kehu",
