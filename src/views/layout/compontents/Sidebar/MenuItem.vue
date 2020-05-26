@@ -40,7 +40,16 @@ export default class MenuItem extends Vue {
     @Prop({ required: true }) private route!: RouteConfig;
     @Prop({ required: true }) private basePath!: string;
     private resolvePath(routePath: string) {
-        return path.posix.join(this.basePath, routePath);
+        if (path.posix) {
+            return path.posix.join(this.basePath, routePath);
+        }
+        if (this.basePath == routePath) {
+            return routePath;
+        } else if (this.basePath == "/") {
+            return this.basePath + routePath;
+        } else {
+            return this.basePath + "/" + routePath;
+        }
     }
     mounted() {}
 }
