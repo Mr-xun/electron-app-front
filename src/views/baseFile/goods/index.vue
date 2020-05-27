@@ -33,7 +33,7 @@
                 <el-table-column min-width="80" align="center" prop="goods_brandCode" label="品牌编码"></el-table-column>
                 <el-table-column min-width="80" align="center" prop="goods_inventory" label="库存">
                     <template slot-scope="scope">
-                        <span>{{scope.row.goods_inventory >=0? scope.row.goods_inventory: "---"}}</span>
+                        <span>{{scope.row.goods_inventory ? scope.row.goods_inventory: "---"}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="goods_specifica" label="规格">

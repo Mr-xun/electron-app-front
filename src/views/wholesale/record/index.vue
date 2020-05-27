@@ -89,7 +89,6 @@ export default class OrderList extends Vue {
         merchant: "",
         create_time: ""
     };
-
     private tableLoading: boolean = false;
     private orderData: Array<any> = [];
     private pagination: {

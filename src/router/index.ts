@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-// const { ipcRenderer } = require('electron');
+const { ipcRenderer } = require('electron');
 import { UserModule } from './../store/modules/user';
 Vue.use(VueRouter);
 import Layout from '@/views/layout/index.vue'
@@ -136,16 +136,16 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes,
 });
-// ipcRenderer.on('href', (event: void, arg: string) => {
-//     if (arg) {
-//         switch (arg) {
-//             case 'back':
-//                 router.go(-1)
-//             default:
-//                 router.push({ path: arg })
-//         }
-//     }
-// });
+ipcRenderer.on('href', (event: void, arg: string) => {
+    if (arg) {
+        switch (arg) {
+            case 'back':
+                router.go(-1)
+            default:
+                router.push({ path: arg })
+        }
+    }
+});
 router.beforeEach(async (to, from, next) => {
     if (to.path === '/login') {
         next()
